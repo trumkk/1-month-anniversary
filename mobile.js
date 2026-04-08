@@ -87,3 +87,14 @@ papers.forEach(paper => {
   const p = new Paper();
   p.init(paper);
 });
+
+const audio = document.querySelector("audio");
+
+const playAudio = () => {
+  audio.play();
+  document.removeEventListener("click", playAudio);
+  document.removeEventListener("touchstart", playAudio);
+};
+
+document.addEventListener("click", playAudio);
+document.addEventListener("touchstart", playAudio);
