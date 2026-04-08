@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Zeyada&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Zeyada&display=swap");
 
 body {
   height: 100vh;
@@ -18,10 +17,10 @@ body {
   background-size: 500px;
   background-position: center center;
   padding: 20px 100px;
-  
+
   transform: rotateZ(-5deg);
-  box-shadow: 1px 15px 20px 0px rgba(0,0,0,0.5);
-  
+  box-shadow: 1px 15px 20px 0px rgba(0, 0, 0, 0.5);
+
   position: absolute;
   touch-action: none;
 }
@@ -39,14 +38,13 @@ body {
   border-radius: 50%;
 }
 
-
 .paper.image img {
   padding: 10px;
-  width: 270px  ; 
-  height: 400px; 
+  width: 270px;
+  height: auto;
 }
 
-body > div:nth-child(2) > img.main{
+body > div:nth-child(2) > img.main {
   width: 300px;
 }
 
@@ -54,10 +52,9 @@ body > div:nth-child(2) > img.main{
   font-size: 30px;
 }
 
-
 .paper.heart::after {
   content: "";
-  background-image: url('https://cdn.pixabay.com/photo/2016/03/31/19/25/cartoon-1294994__340.png');
+  background-image: url("https://cdn.pixabay.com/photo/2016/03/31/19/25/cartoon-1294994__340.png");
   width: 100%;
   height: 100%;
   position: absolute;
@@ -70,10 +67,40 @@ body > div:nth-child(2) > img.main{
 }
 
 p {
-  font-family: 'Brush Script MT', cursive;
+  font-family: "Brush Script MT", cursive;
   font-size: 50px;
-  color: rgb(0,0,100);
+  color: rgb(0, 0, 100);
   opacity: 0.75;
   user-select: none;
   /* filter: drop-shadow(2px 1.5px 1px rgba(0,0,105,0.9)); */
+}
+
+/* ===== MOBILE FIX ===== */
+@media (max-width: 768px) {
+  .paper {
+    padding: 15px 20px; /* giảm mạnh padding */
+    max-width: 90vw; /* không vượt màn hình */
+  }
+
+  .paper.image img {
+    width: 100%; /* co theo paper */
+    height: auto; /* giữ tỉ lệ */
+  }
+
+  body > div:nth-child(2) > img.main {
+    width: 100%;
+  }
+
+  p {
+    font-size: 20px; /* giảm chữ */
+  }
+
+  .paper.image p {
+    font-size: 18px;
+  }
+
+  .paper.heart {
+    width: 120px;
+    height: 120px;
+  }
 }
