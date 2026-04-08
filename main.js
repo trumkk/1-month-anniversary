@@ -2,8 +2,6 @@ let highestZ = 1;
 
 class Paper {
   holding = false;
-  startX = 0;
-  startY = 0;
   prevX = 0;
   prevY = 0;
   currentX = 0;
@@ -11,21 +9,17 @@ class Paper {
   rotation = Math.random() * 30 - 15;
 
   init(paper) {
-    // START (chuột + touch)
-    paper.addEventListener("pointerdown", (e) => {
+    // ===== MOUSE (PC) =====
+    paper.addEventListener("mousedown", (e) => {
       this.holding = true;
 
       paper.style.zIndex = highestZ++;
-      this.startX = e.clientX;
-      this.startY = e.clientY;
+
       this.prevX = e.clientX;
       this.prevY = e.clientY;
-
-      paper.setPointerCapture(e.pointerId);
     });
 
-    // MOVE
-    paper.addEventListener("pointermove", (e) => {
+    document.addEventListener("mousemove", (e) => {
       if (!this.holding) return;
 
       const dx = e.clientX - this.prevX;
@@ -43,24 +37,64 @@ class Paper {
       `;
     });
 
-    // END
-    paper.addEventListener("pointerup", () => {
+    document.addEventListener("mouseup", () => {
       this.holding = false;
     });
 
-    paper.addEventListener("pointercancel", () => {
+    // ===== TOUCH (MOBILE) =====
+    paper.addEventListener(
+      "touchstart",
+      (e) => {
+        this.holding = true;
+
+        paper.style.zIndex = highestZ++;
+
+        const touch = e.touches[0];
+        this.prevX = touch.clientX;
+        this.prevY = touch.clientY;
+      },
+      { passive: false },
+    );
+
+    paper.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!this.holding) return;
+
+        e.preventDefault(); // 🔥 cực kỳ quan trọng
+
+        const touch = e.touches[0];
+
+        const dx = touch.clientX - this.prevX;
+        const dy = touch.clientY - this.prevY;
+
+        this.currentX += dx;
+        this.currentY += dy;
+
+        this.prevX = touch.clientX;
+        this.prevY = touch.clientY;
+
+        paper.style.transform = `
+        translate(${this.currentX}px, ${this.currentY}px)
+        rotate(${this.rotation}deg)
+      `;
+      },
+      { passive: false },
+    );
+
+    paper.addEventListener("touchend", () => {
       this.holding = false;
     });
   }
 }
 
-// init papers
+// init
 document.querySelectorAll(".paper").forEach((paper) => {
   const p = new Paper();
   p.init(paper);
 });
 
-// ================= AUDIO FIX =================
+// ===== AUDIO =====
 const audio = document.getElementById("bgm");
 
 const playAudio = () => {
@@ -68,7 +102,5 @@ const playAudio = () => {
   audio.play().catch(() => {});
 };
 
-// phải là interaction thật
-document.body.addEventListener("pointerdown", playAudio, { once: true });
 document.body.addEventListener("touchstart", playAudio, { once: true });
 document.body.addEventListener("click", playAudio, { once: true });
