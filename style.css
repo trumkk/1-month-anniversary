@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Zeyada&display=swap');
 
 
-
-
 body {
   height: 100vh;
   display: flex;
@@ -12,6 +10,7 @@ body {
   background-size: 1000px;
   background-image: url("https://www.psdgraphics.com/wp-content/uploads/2022/01/white-math-paper-texture.jpg");
   background-position: center center;
+  overflow: hidden;
 }
 
 .paper {
@@ -19,12 +18,17 @@ body {
   background-size: 500px;
   background-position: center center;
   padding: 20px 100px;
-/*  min-width: 800px; */
   
   transform: rotateZ(-5deg);
   box-shadow: 1px 15px 20px 0px rgba(0,0,0,0.5);
   
   position: absolute;
+  touch-action: none;
+}
+
+.paper img {
+  user-select: none;
+  pointer-events: none;
 }
 
 .paper.heart {
